@@ -1,6 +1,7 @@
 import random, math, copy, time
 from colorama import Fore
 
+size = 5
 
 def createBoard(dimens):
     
@@ -33,16 +34,27 @@ def printBoard(board):
 
 def setup():
     global myBoard, board1
-    myBoard, board1 = createBoard(5)
+    myBoard, board1 = createBoard(size)
 
     printBoard(myBoard)
     print("\n")
 
 def enterguess():
     global counter
+    
+    
     row = int(input("What row do you want to place your ship? "))
     column = int(input("What collumn do you want to place your ship? "))
     
+    while row > size or row < 1 or column > size or column < 1:
+        
+        if row > size or row < 1:
+            print('\nRow out of range, please enter a number between 1 and {size}')
+            row = int(input("What row do you want to place your ship?"))
+       
+        if column > size or column < 1:
+            print('Collumn out of range, please enter a number between 1 and {size}')
+            column = int(input("What collumn do you want to place your ship? "))
 
     if board1[row][column]=="S":
         myBoard[row][column]="O"
