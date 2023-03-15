@@ -2,7 +2,7 @@ import random, math, copy, time
 from colorama import Fore
 
 size = 5
-
+usedcords = []
 def createBoard(dimens):
     
     global counter
@@ -41,21 +41,31 @@ def setup():
 
 def enterguess():
     global counter
-    
+    global usedcords
     
     row = int(input("What row do you want to place your ship? "))
     column = int(input("What collumn do you want to place your ship? "))
     
-    while row > size or row < 1 or column > size or column < 1:
+    while row > size or row < 1 or column > size or column < 1 or (row, column) in usedcords:
         
         if row > size or row < 1:
             print('\nRow out of range, please enter a number between 1 and {size}')
+            row = int(input("What row do you want to place your ship?"))
+        
+        if (row, column) in usedcords:
+            print('\nAlready used this row/column, please enter a number between 1 and {size}')
             row = int(input("What row do you want to place your ship?"))
        
         if column > size or column < 1:
             print('Collumn out of range, please enter a number between 1 and {size}')
             column = int(input("What collumn do you want to place your ship? "))
 
+        if (row, column) in usedcords:
+            print('\nAlready used this row/column, please enter a number between 1 and {size}')
+            column = int(input("What column do you want to place your ship?"))
+
+    usedcords.append((row, column))
+    
     if board1[row][column]=="S":
         myBoard[row][column]="O"
         printBoard(myBoard)
